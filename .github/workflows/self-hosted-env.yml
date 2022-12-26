@@ -17,6 +17,7 @@ jobs:
         run: echo "This is running an echo"
       
       - name: Test something
+        uses: github/super-linter/slim@v4.9.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           #SSL_CERT_SECRET: ${{ secrets.ROOT_CA }}
