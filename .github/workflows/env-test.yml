@@ -1,1 +1,20 @@
+name: env-test
 
+on:
+  push:
+    branches [ env-test ]
+
+workflow_dispatch:
+
+jobs:
+  display:
+    runs-on: ubuntu-latest
+    env:
+      platform: Azure
+      region: central
+      profile_path: profile/
+
+    steps:
+      - name: Display custom env variables
+        run: |
+          echo "The Platform is ${{ env.Azure }} based on region $region and profile path is ${{ env.profile_path}}"
