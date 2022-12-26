@@ -11,7 +11,43 @@ on:
 
 jobs:
   List_files:
-    runs-on: [self-hosted, mcs-self-hosted]
+    runs-on: self-hosted
     steps:
       - name: Display custom env variables
         run: echo "This is running an echo"
+      - name: Test something
+        uses: github/super-linter/slim@v4.9.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #SSL_CERT_SECRET: ${{ secrets.ROOT_CA }}
+          SSL_CERT_SECRET: /etc/pki/ca-trust/source/anchors/GAORoot.pem
+          NODE_EXTRA_CA_CERTS: /etc/pki/ca-trust/source/anchors/GAORoot.pem
+          #GITHUB_ACTIONS_RUNNER_TLS_NO_VERIFY: 1
+          # by default super-linter assumes our repo default branch doesn't change
+          # and it also assumes our PRs are always against that default branch
+          # for multi-trunk (releases) repos, this get the base branch from the previous steps
+          # see issue https://github.com/github/super-linter/issues/1123
+          DEFAULT_BRANCH: ${{ env.DEFAULT_BRANCH }}
+          DISABLE_ERRORS: true
+          #OUTPUT_FOLDER: ${{ GITHUB_WORKSPACE }}
+          # setting this to false means that only changed files will be scanned in each commit
+          VALIDATE_ALL_CODEBASE: ${{ !contains(github.event_name, 'pull_request') }}
+          #VALIDATE_ALL_CODEBASE: false
+          # turn off dockerfilelint, as its a dead project
+          # https://github.com/replicatedhq/dockerfilelint/issues/169
+          # hadolint will still run and is sufficient (no need for two linters)
+          VALIDATE_DOCKERFILE: false
+          VALIDATE_CPP: false
+          VALIDATE_CLOJURE: false
+          VALIDATE_COFFEESCRIPT: false
+          VALIDATE_SQLFLUFF: false
+          VALIDATE_TERRAGRUNT: false
+          VALIDATE_PYTHON_MYPY: false
+          # turn off JSCPD copy/paste detection, which results in lots of results for examples and devops repos
+          VALIDATE_JSCPD: false
+          # turn off shfmt shell formatter as we already have shellcheck
+          VALIDATE_SHELL_SHFMT: false
+          # editorconfig is great, but...
+          # editorconfig-linter is rather generic and file-specific linters are better
+          # turn off editorconfig-checker, which flags too many false positives
+          VALIDATE_EDITORCONFIG: false
