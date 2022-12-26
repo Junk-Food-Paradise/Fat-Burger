@@ -1,4 +1,4 @@
-name: env-test
+name: self-hosted-env
 
 # Controls when the workflow will run
 on:
@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  display:
-    runs-on: [self-hosted,mcs-self-hosted]
+  List_files:
+    runs-on: [self-hosted, mcs-self-hosted]
     steps:
       - name: Display custom env variables
         run: |
