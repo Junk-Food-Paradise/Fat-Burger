@@ -1,0 +1,19 @@
+name: env-test
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "MAIN" ]
+  pull_request:
+    branches: [ "MAIN" ]
+  workflow_dispatch:
+
+jobs:
+  display:
+    runs-on: [self-hosted,mcs-self-hosted]
+    steps:
+      - name: Display custom env variables
+        run: |
+          echo "Listing the files created with pre-run.sh script" 
+          ls -al ~/test-script
