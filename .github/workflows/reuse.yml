@@ -10,4 +10,4 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   call-workflow-1-in-local-repo:
-    uses: Junk-Food-Paradise/Fat-Burger/.github/workflows/Semantic.yml@main
+    uses: Junk-Food-Paradise/Fat-Burger/.github/workflows/Semantic.yml@MAIN
